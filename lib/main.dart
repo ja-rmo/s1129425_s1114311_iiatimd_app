@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:dots_indicator/dots_indicator.dart';
+import 'dart:ui';
 
-void main() {
-  runApp(const MainApp());
-}
+import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'chapter.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -24,67 +23,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final PageController _pageController = PageController();
-  final List<Widget> _pages = [
-    Container(color: Colors.blue),
-    Container(color: Colors.green),
-    Container(color: Colors.red),
-  ];
-  double _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!;
-      });
-    });
-  }
+  final PageController _pageController = PageController(viewportFraction: 0.8);
+  final double width = window.physicalSize.width;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dovenlingo'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        appBar: AppBar(
+          title: const Text('Dovenlingo'),
+        ),
+        body: Column(children: [
           Container(
-            height: 60,
-            alignment: Alignment.center,
-            child: DotsIndicator(
-              dotsCount: _pages.length,
-              position: _currentPage.toInt(),
-              decorator: DotsDecorator(
-                color: Colors.green[100]!,
-                activeColor: Colors.green[900],
-                size: const Size.fromRadius(10),
-                activeSize: const Size(15, 35),
-                activeShape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(10),
-                    bottom: Radius.circular(10),
-                  ),
-                ),
-              ),
-            ),
+              height: 40,
+              width: 100,
+              alignment: Alignment.center,
+              child:
+                  SmoothPageIndicator(controller: _pageController, count: 3)),
+          SizedBox(
+            height: 250,
+            width: width,
+            child: PageView(controller: _pageController, children: [
+              Chapter(
+                  headline: "hoofdstuk 1",
+                  description: "introductie",
+                  onPressed: () => Navigator.pushNamed(context, '/hoofdstuk1')),
+              Chapter(
+                  headline: "hoofdstuk 2",
+                  description: "introductie",
+                  onPressed: () => Navigator.pushNamed(context, '/hoofdstuk2')),
+              Chapter(
+                  headline: "hoofdstuk 3",
+                  description: "introductie",
+                  onPressed: () => Navigator.pushNamed(context, '/hoofdstuk3'))
+            ]),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: SizedBox(
-              width: 360.0,
-              height: 360.0,
-              child: PageView(
-                controller: _pageController,
-                children: _pages,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        ]));
   }
+}
+
+void main() {
+  runApp(const MainApp());
 }
