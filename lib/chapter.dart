@@ -5,11 +5,12 @@ class Chapter extends StatelessWidget {
   final String description;
   final VoidCallback onPressed;
 
-  const Chapter(
-      {super.key,
-      required this.headline,
-      required this.description,
-      required this.onPressed});
+  const Chapter({
+    Key? key,
+    required this.headline,
+    required this.description,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
