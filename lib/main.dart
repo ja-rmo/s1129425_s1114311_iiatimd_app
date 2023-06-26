@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dovenlingo/camera_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_media_info/flutter_media_info.dart';
 import 'chapter.dart';
 import 'chapter_navigation.dart';
 import 'full_video_page.dart';
