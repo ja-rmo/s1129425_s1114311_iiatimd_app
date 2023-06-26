@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_dovenlingo/video_player_widget.dart';
+import 'video_player_widget.dart';
 import 'chapter.dart';
 import 'chapter_navigation.dart';
 import 'alfabet_A-E_video_page.dart';
