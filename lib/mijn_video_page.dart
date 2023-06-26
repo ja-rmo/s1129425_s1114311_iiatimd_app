@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-import 'mijn_video_page.dart';
-
-class VideoPage extends StatefulWidget {
-  const VideoPage({Key? key}) : super(key: key);
+class MijnVideoPage extends StatefulWidget {
+  const MijnVideoPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _VideoPageState createState() => _VideoPageState();
+  _MijnVideoPageState createState() => _MijnVideoPageState();
 }
 
-class _VideoPageState extends State<VideoPage> {
+class _MijnVideoPageState extends State<MijnVideoPage> {
   late VideoPlayerController _controller;
   bool _isVideoInitialized = false;
   bool _isPlaying = false;
@@ -45,7 +42,7 @@ class _VideoPageState extends State<VideoPage> {
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Wij leren vandaag de zin: Mijn naam is {}!',
+              'We gaan eerst apart alle woorden leren. Zo doe je het woord "mijn"',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
@@ -86,16 +83,12 @@ class _VideoPageState extends State<VideoPage> {
         ],
       ),
       floatingActionButton: Container(
-        margin: const EdgeInsets.all(16),
         width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MijnVideoPage()),
-            );
-          },
-          child: const Text('Aan de slag'),
+        margin: const EdgeInsets.all(16.0),
+        child: ElevatedButton.icon(
+          onPressed: () {},
+          icon: const Icon(Icons.camera),
+          label: const Text('Maak video'),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
