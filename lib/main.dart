@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'chapter.dart';
 import 'chapter_navigation.dart';
-import 'video_page.dart';
+import 'full_video_page.dart';
 
 void main() {
   runApp(const MainApp());
