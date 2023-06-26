@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dovenlingo/camera_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_media_info/flutter_media_info.dart';
 import 'chapter.dart';
 
 class MainApp extends StatelessWidget {
@@ -11,7 +13,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dovenlingo',
       theme: ThemeData(primarySwatch: Colors.green),
-      home: const HomePage(),
+      home: CameraPage(),
     );
   }
 }
