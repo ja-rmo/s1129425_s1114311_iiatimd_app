@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dovenlingo/video_player_widget.dart';
-
-void main() {
-  runApp(const MainApp());
-}
+import 'video_player_widget.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
