@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import 'mijn_video_page.dart';
+
 class VideoPage extends StatefulWidget {
   final String filePath;
 
@@ -58,6 +60,7 @@ class _VideoPageState extends State<VideoPage> {
           }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
