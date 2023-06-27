@@ -44,14 +44,17 @@ class _VideoPageState extends State<VideoPage> {
           )
         ],
       ),
-      extendBodyBehindAppBar: true,
       body: FutureBuilder(
         future: _initVideoPlayer(),
         builder: (context, state) {
-          if (state.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+          if (state.connectionState == ConnectionState.done) {
+            return AspectRatio(
+              aspectRatio: 16/9,
+              child: VideoPlayer(_videoPlayerController));
+
           } else {
-            return VideoPlayer(_videoPlayerController);
+            return const Center(child: CircularProgressIndicator());
+
           }
         },
       ),
