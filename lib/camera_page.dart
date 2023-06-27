@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import 'video_page.dart';
 
 class CameraPage extends StatefulWidget {
@@ -29,11 +30,11 @@ class _CameraPageState extends State<CameraPage> {
   _initCamera() async {
     final cameras = await availableCameras();
     if (cameras.isEmpty) {
-      // Handle the case when no cameras are available
-      return;
+      return const Text('No camera found');
     }
     final firstCamera = cameras.first;
-    _cameraController = CameraController(firstCamera, ResolutionPreset.max);
+    _cameraController = CameraController(firstCamera, ResolutionPreset.high);
+
     await _cameraController.initialize();
     setState(() => _isLoading = false);
   }
@@ -56,6 +57,14 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    var tmp = MediaQuery.of(context).size;
+    final screenH = math.max(tmp.height, tmp.width);
+    final screenW = math.min(tmp.height, tmp.width);
+    tmp = _cameraController.value.previewSize!;
+    final previewH = math.max(tmp.height, tmp.width);
+    final previewW = math.min(tmp.height, tmp.width);
+    final screenRatio = screenH / screenW;
+    final previewRatio = previewH / previewW;
     if (_isLoading) {
       return Container(
         color: Colors.white,
@@ -64,22 +73,20 @@ class _CameraPageState extends State<CameraPage> {
         ),
       );
     } else {
-      return Center(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            CameraPreview(_cameraController),
-            Padding(
-              padding: const EdgeInsets.all(25),
-              child: FloatingActionButton(
-                backgroundColor: Colors.red,
-                child: Icon(_isRecording ? Icons.stop : Icons.circle),
-                onPressed: () => _recordVideo(),
-              ),
+      return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: OverflowBox(
+              maxHeight: screenRatio > previewRatio
+                  ? screenH
+                  : screenW / previewW * previewH,
+              maxWidth: screenRatio > previewRatio
+                  ? screenH / previewH * previewW
+                  : screenW,
+              child: CameraPreview(_cameraController),
             ),
-          ],
-        ),
-      );
+          ));
     }
   }
 }
