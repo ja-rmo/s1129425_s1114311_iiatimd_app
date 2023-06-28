@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:camera/camera.dart';
-import 'video_page.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -43,11 +42,11 @@ class _CameraPageState extends State<CameraPage> {
     if (_isRecording) {
       final file = await _cameraController.stopVideoRecording();
       setState(() => _isRecording = false);
-      final route = MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => VideoPage(filePath: file.path),
-      );
-      Navigator.push(context, route);
+      // final route = MaterialPageRoute(
+      //   fullscreenDialog: true,
+      //   builder: (_) => VideoPage(filePath: file.path),
+      // );
+      // Navigator.push(context, route);
     } else {
       await _cameraController.prepareForVideoRecording();
       await _cameraController.startVideoRecording();
