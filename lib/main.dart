@@ -6,8 +6,15 @@ import 'chapter_navigation.dart';
 import 'alfabet_A-E_video_page.dart';
 import 'block_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '';
 
+
+void main() {
+  runApp(const MainApp());
+}
+
+void main() {
+  runApp(const MainApp());
+}
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
