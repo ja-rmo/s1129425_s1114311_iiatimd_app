@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'video_player_widget.dart';
 
+void main() {
+  runApp(const MainApp());
+}
+
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
   @override
@@ -14,7 +18,7 @@ class MainApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
