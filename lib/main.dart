@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dovenlingo/camera_page.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:flutter_media_info/flutter_media_info.dart';
+
+import 'package:flutter_dovenlingo/video_player_widget.dart';
 import 'chapter.dart';
 import 'chapter_navigation.dart';
-import 'full_video_page.dart';
 import 'alfabet_A-E_video_page.dart';
+import 'block_widget.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '';
 
-void main() {
-  runApp(const MainApp());
-}
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -26,7 +24,7 @@ class MainApp extends StatelessWidget {
         // '/hoofdstuk2_navigatie': (context) => const ChapterNavigation(),
         // '/hoofdstuk3_navigatie': (context) => const ChapterNavigation(),
         '/alfabet': (context) => const AlfabetAEPage(),
-        '/naam': (context) => const VideoPage(),
+        '/naam': (context) => const VideoPlayerWidget(videoUrl: 'assets/videos/alfabet/naam.mp4'),
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,

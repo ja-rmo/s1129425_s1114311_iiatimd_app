@@ -1,6 +1,6 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:camera/camera.dart';
 import 'video_page.dart';
 
 class CameraPage extends StatefulWidget {

@@ -2,21 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
+  final String videoUrl;
 
-  const VideoPlayerWidget({Key? key}) : super(key: key);
+  const VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
-  final String _videoUrl = 'https://media.tenor.com/ZFc20z8DItkAAAPo/facepalm-really.mp4';
-
+  late String _videoUrl;
+  
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(_videoUrl);
+    _videoUrl = widget.videoUrl;
+    _controller = VideoPlayerController.asset(_videoUrl);
+    _initializeVideoPlayer();
+  }
+
+  Future<void> _initializeVideoPlayer() async {
+    try {
+      await _controller.initialize();
+      setState(() {});
+    } catch (error) {
+      // Handle error
+      print('Error initializing video player: $error');
+    }
   }
 
   @override
@@ -28,9 +42,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Video Player'),
-      ),
       body: FutureBuilder(
         future: _controller.initialize(),
         builder: (context, snapshot) {

@@ -39,7 +39,6 @@ dependencies:
   dots_indicator: ^3.0.0
   smooth_page_indicator: ^1.1.0
   camera: ^0.10.5+2
-  video_player: ^2.6.1
   path_provider: ^2.0.15
   flutter_ffmpeg: ^0.4.2
   flutter_media_info: ^0.0.3
@@ -78,6 +77,8 @@ flutter:
   # https://flutter.dev/assets-and-images/#resolution-aware
   assets:
     - assets/videos/test.mp4
+    - assets/videos/cat-jam.mp4
+    - assets/videos/the-more-you-know.mp4
 
 
 
