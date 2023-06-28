@@ -13,6 +13,7 @@ class ChapterNavigation extends StatelessWidget {
         child: GridView.count(
           crossAxisCount: 2,
           children: [
+            _buildButton(context, 'Alfabet', '/alfabet'),
             _buildButton(context, 'Naam', '/naam'),
             _buildButton(context, 'Leeftijd', '/leeftijd'),
             _buildButton(context, 'Wonen', '/wonen'),

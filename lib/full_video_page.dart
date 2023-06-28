@@ -19,12 +19,13 @@ class _VideoPageState extends State<VideoPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/videos/test.mp4')
-      ..initialize().then((_) {
-        setState(() {
-          _isVideoInitialized = true;
-        });
-      });
+    _controller =
+        VideoPlayerController.asset('assets/videos/Mijn_naam_is_Suzette.mp4')
+          ..initialize().then((_) {
+            setState(() {
+              _isVideoInitialized = true;
+            });
+          });
   }
 
   @override

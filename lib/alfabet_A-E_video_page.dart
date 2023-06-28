@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class MijnVideoPage extends StatefulWidget {
-  const MijnVideoPage({Key? key}) : super(key: key);
+class AlfabetAEPage extends StatefulWidget {
+  const AlfabetAEPage({Key? key}) : super(key: key);
 
   @override
-  _MijnVideoPageState createState() => _MijnVideoPageState();
+  // ignore: library_private_types_in_public_api
+  _AlfabetAEPageState createState() => _AlfabetAEPageState();
 }
 
-class _MijnVideoPageState extends State<MijnVideoPage> {
+class _AlfabetAEPageState extends State<AlfabetAEPage> {
   late VideoPlayerController _controller;
   bool _isVideoInitialized = false;
   bool _isPlaying = false;
@@ -16,7 +17,7 @@ class _MijnVideoPageState extends State<MijnVideoPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/videos/Mijn.mp4')
+    _controller = VideoPlayerController.asset('assets/videos/Alfabet_A-E.mp4')
       ..initialize().then((_) {
         setState(() {
           _isVideoInitialized = true;
@@ -34,7 +35,7 @@ class _MijnVideoPageState extends State<MijnVideoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mijn naam is {}'),
+        title: const Text('Het Alfabet'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +43,7 @@ class _MijnVideoPageState extends State<MijnVideoPage> {
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'We gaan eerst apart alle woorden leren. Zo doe je het woord "mijn"',
+              'Hier leer je het alfabet! we beginnen met A tot en met E!"',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
