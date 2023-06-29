@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'chapter.dart';
 import 'chapter_navigation.dart';
 import 'full_video_page.dart';
@@ -33,8 +34,38 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final TextEditingController _textFieldController = TextEditingController();
+  int? savedInteger;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInteger();
+  }
+
+  void _loadInteger() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedInteger = prefs.getInt('testyinteger');
+    });
+  }
+
+  void _saveInteger(int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('testyinteger', value);
+    setState(() {
+      savedInteger = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +116,33 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            'Opgeslagen waarde: ${savedInteger ?? "Nog geen waarde"}',
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              controller: _textFieldController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Voer een getal in',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              int? value = int.tryParse(_textFieldController.text);
+              if (value != null) {
+                _saveInteger(value);
+              }
+            },
+            child: const Text('Opslaan'),
           ),
         ],
       ),
