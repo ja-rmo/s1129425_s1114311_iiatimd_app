@@ -44,6 +44,10 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   VideoPlayerController? videoController;
   VoidCallback? videoPlayerListener;
   bool enableAudio = false;
+  double previewPadding = 16.0;
+
+  set targetAspectRatio(
+      double targetAspectRatio) {} // Voeg padding toe aan de voorbeeldweergave
 
   @override
   void initState() {
@@ -62,7 +66,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final CameraController? cameraController = camController;
 
-    // App state changed before we got the chance to initialize.
+    // App-status veranderd voordat we de kans hadden om te initialiseren.
     if (cameraController == null || !cameraController.value.isInitialized) {
       return;
     }
@@ -118,9 +122,23 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
       return Container();
     }
 
-    return AspectRatio(
-      aspectRatio: cameraController.value.aspectRatio,
-      child: CameraPreview(cameraController),
+    final size = MediaQuery.of(context).size;
+    final deviceRatio = size.width / size.height;
+
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final width = constraints.maxWidth;
+        final height = width / deviceRatio;
+
+        return OverflowBox(
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: width,
+            height: height,
+            child: CameraPreview(cameraController),
+          ),
+        );
+      },
     );
   }
 
@@ -210,17 +228,56 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   }
 
   Future<void> _initializeCamera() async {
-  await _getAvailableCameras();
-  if (cameras.isNotEmpty) {
-    await _initializeCameraController(cameras[0]);
+    await _getAvailableCameras();
+    if (cameras.isNotEmpty) {
+      await _initializeCameraController(cameras[0]);
+    }
   }
-}
 
   Future<void> onNewCameraSelected(CameraDescription cameraDescription) async {
     if (camController != null) {
-      return camController!.setDescription(cameraDescription);
-    } else {
-      return _initializeCameraController(cameraDescription);
+      await camController!.dispose();
+    }
+
+    camController = CameraController(
+      cameraDescription,
+      ResolutionPreset.medium,
+      enableAudio: enableAudio,
+    );
+
+    camController!.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+      if (camController!.value.hasError) {
+        showInSnackBar('Camera error ${camController!.value.errorDescription}');
+      }
+    });
+
+    try {
+      await camController!.initialize();
+
+      final Size screenSize = MediaQuery.of(context).size;
+      final double screenAspectRatio = screenSize.width / screenSize.height;
+      final double cameraAspectRatio = camController!.value.aspectRatio;
+      final double scale = screenAspectRatio / cameraAspectRatio;
+
+      if (mounted) {
+        setState(() {
+          camController!.value = camController!.value.copyWith(
+            previewSize: Size(
+              screenSize.width * scale,
+              screenSize.height * scale,
+            ),
+          );
+        });
+      }
+    } on CameraException catch (e) {
+      _showCameraException(e);
+    }
+
+    if (mounted) {
+      setState(() {});
     }
   }
 
@@ -245,7 +302,26 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
 
     try {
       await cameraController.initialize();
-      camController = cameraController;
+
+      final Size screenSize = MediaQuery.of(context).size;
+      final double screenAspectRatio = screenSize.width / screenSize.height;
+      final double targetAspectRatio = cameraController.value.aspectRatio;
+      final double scale = screenAspectRatio / targetAspectRatio;
+
+      if (mounted) {
+        setState(() {
+          camController = cameraController;
+          camController!.value = camController!.value.copyWith(
+            previewSize: Size(
+              screenSize.width * scale,
+              screenSize.height * scale,
+            ),
+          );
+
+          // Update the targetAspectRatio for future camera switches
+          this.targetAspectRatio = targetAspectRatio;
+        });
+      }
     } on CameraException catch (e) {
       _showCameraException(e);
     }
