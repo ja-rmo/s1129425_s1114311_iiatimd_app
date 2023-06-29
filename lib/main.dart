@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'chapter.dart';
+import 'chapter_navigation.dart';
+import 'alfabet_A-E_video_page.dart';
 
-import 'video_player_widget.dart';
-import 'camera_preview.dart';
-
-Future<void> main() async{
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-  } catch (e) {
-    print(e);
-  }
+void main() {
   runApp(const MainApp());
 }
-
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -28,7 +23,7 @@ class MainApp extends StatelessWidget {
         // '/hoofdstuk2_navigatie': (context) => const ChapterNavigation(),
         // '/hoofdstuk3_navigatie': (context) => const ChapterNavigation(),
         '/alfabet': (context) => const AlfabetAEPage(),
-        '/naam': (context) => const VideoPlayerWidget(videoUrl: 'assets/videos/alfabet/naam.mp4'),
+        // '/naam': (context) => const ,
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,
@@ -46,22 +41,50 @@ class HomePage extends StatelessWidget {
     final PageController pageController = PageController(viewportFraction: 0.8);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Dovenlingo')),
-      body: ListView(
+      appBar: AppBar(
+        title: const Text('Dovenlingo'),
+      ),
+      body: Column(
         children: [
           Container(
-              height: 300,
-              width: 200,
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
-              child: const VideoPlayerWidget(videoUrl: 'assets/videos/cat-jam.mp4')),
-          Container(
-              height: 300,
-              width: 200,
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
-              child: const VideoPlayerWidget(
-                  videoUrl: 'assets/videos/the-more-you-know.mp4')),
+            height: 40,
+            width: 100,
+            alignment: Alignment.center,
+            child: SmoothPageIndicator(
+              controller: pageController,
+              count: 3,
+            ),
+          ),
+          SizedBox(
+            height: 250,
+            width: width,
+            child: PageView(
+              controller: pageController,
+              children: [
+                Chapter(
+                  headline: "Hoofdstuk 1",
+                  description: "Introductie",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/hoofdstuk1_navigatie');
+                  },
+                ),
+                Chapter(
+                  headline: "Hoofdstuk 2",
+                  description: "Introductie",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/hoofdstuk2_navigatie');
+                  },
+                ),
+                Chapter(
+                  headline: "Hoofdstuk 3",
+                  description: "Introductie",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/hoofdstuk3_navigatie');
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
