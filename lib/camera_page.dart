@@ -30,7 +30,9 @@ class _CameraPageState extends State<CameraPage> {
   _initCamera() async {
     final cameras = await availableCameras();
     if (cameras.isEmpty) {
-      return const Text('No camera found');
+      print('No camera found');
+      // Implementeer hier je fallback-logica, bijvoorbeeld een foutmelding weergeven.
+      return;
     }
     final firstCamera = cameras.first;
     _cameraController = CameraController(firstCamera, ResolutionPreset.high);

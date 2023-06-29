@@ -1,7 +1,7 @@
 // import 'dart:ui';
 
 import 'package:flutter/material.dart';
-// import 'package:flutter_dovenlingo/camera_page.dart';
+import 'package:flutter_dovenlingo/camera_page.dart';
 import 'package:flutter_dovenlingo/video_player_widget.dart';
 // import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 // import 'package:flutter_media_info/flutter_media_info.dart';
@@ -29,7 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const VideoPlayerWidget();
+    return const CameraPage();
   }
 }
 
