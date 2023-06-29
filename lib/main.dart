@@ -40,30 +40,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// class _HomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Dovenlingo')),
-//       body: ListView(
-//         children: [
-//           Container(
-//               height: 300,
-//               width: 200,
-//               margin: const EdgeInsets.all(20),
-//               padding: const EdgeInsets.all(20),
-//               child: const VideoPlayerWidget(videoUrl: 'assets/videos/cat-jam.mp4')),
-//           Container(
-//               height: 300,
-//               width: 200,
-//               margin: const EdgeInsets.all(20),
-//               padding: const EdgeInsets.all(20),
-//               child: const VideoPlayerWidget(
-//                   videoUrl: 'assets/videos/the-more-you-know.mp4')),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
