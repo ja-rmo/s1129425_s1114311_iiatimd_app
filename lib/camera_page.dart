@@ -1,18 +1,17 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'video_page.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CameraPageState createState() => _CameraPageState();
 }
 
 class _CameraPageState extends State<CameraPage> {
   bool _isLoading = true;
-  bool _isRecording = false;
   late CameraController _cameraController;
 
   @override
@@ -39,22 +38,6 @@ class _CameraPageState extends State<CameraPage> {
 
     await _cameraController.initialize();
     setState(() => _isLoading = false);
-  }
-
-  _recordVideo() async {
-    if (_isRecording) {
-      final file = await _cameraController.stopVideoRecording();
-      setState(() => _isRecording = false);
-      final route = MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => VideoPage(filePath: file.path),
-      );
-      Navigator.push(context, route);
-    } else {
-      await _cameraController.prepareForVideoRecording();
-      await _cameraController.startVideoRecording();
-      setState(() => _isRecording = true);
-    }
   }
 
   @override
