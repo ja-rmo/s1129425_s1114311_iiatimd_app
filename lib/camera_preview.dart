@@ -101,11 +101,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         _captureControlRowWidget(),
         Padding(
           padding: const EdgeInsets.all(5.0),
-          child: Row(
-            children: <Widget>[
-              _cameraTogglesRowWidget(),
-            ],
-          ),
+          child: _cameraTogglesRowWidget(),
         ),
       ],
     );
@@ -118,10 +114,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
       return Container();
     }
 
-    return AspectRatio(
-      aspectRatio: cameraController.value.aspectRatio,
-      child: CameraPreview(cameraController),
-    );
+    return CameraPreview(cameraController);
   }
 
   Widget _captureControlRowWidget() {
@@ -210,11 +203,11 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   }
 
   Future<void> _initializeCamera() async {
-  await _getAvailableCameras();
-  if (cameras.isNotEmpty) {
-    await _initializeCameraController(cameras[0]);
+    await _getAvailableCameras();
+    if (cameras.isNotEmpty) {
+      await _initializeCameraController(cameras[0]);
+    }
   }
-}
 
   Future<void> onNewCameraSelected(CameraDescription cameraDescription) async {
     if (camController != null) {
@@ -246,12 +239,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     try {
       await cameraController.initialize();
       camController = cameraController;
+
+      if (mounted) {
+        setState(() {});
+      }
     } on CameraException catch (e) {
       _showCameraException(e);
-    }
-
-    if (mounted) {
-      setState(() {});
     }
   }
 
