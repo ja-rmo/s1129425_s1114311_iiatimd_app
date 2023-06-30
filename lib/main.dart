@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'chapter.dart';
+import 'widgets/chapter_button.dart';
+import 'chapterOne/alphabet_ae.dart';
 import 'chapter_navigation.dart';
-import 'alfabet_A-E_video_page.dart';
+import 'camera_preview.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 
@@ -19,14 +21,16 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/hoofdstuk1_navigatie': (context) => const ChapterNavigation(),
-        // '/hoofdstuk2_navigatie': (context) => const ChapterNavigation(),
-        // '/hoofdstuk3_navigatie': (context) => const ChapterNavigation(),
-        '/alfabet': (context) => const AlfabetAEPage(),
-        // '/naam': (context) => const ,
+        '/hoofdstuk-1': (context) => const ChapterNavigation(),
+        // '/hoofdstuk-2': (context) => const ChapterNavigation().chapter2(context),
+        // '/hoofdstuk-3': (context) => const ChapterNavigation().chapter3(context),
+        '/alfabetAE': (context) => const AlphabetAE(),
+
+        // '/naam': (context) => const,
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,
+        '/camera': (context) => const CameraPreviewWidget(),
       },
     );
   }
@@ -36,7 +40,7 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     final double width = MediaQuery.of(context).size.width;
     final PageController pageController = PageController(viewportFraction: 0.8);
 
@@ -61,25 +65,25 @@ class HomePage extends StatelessWidget {
             child: PageView(
               controller: pageController,
               children: [
-                Chapter(
+                ChapterButton(
                   headline: "Hoofdstuk 1",
                   description: "Introductie",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/hoofdstuk1_navigatie');
+                    Navigator.pushNamed(context, '/hoofdstuk-1');
                   },
                 ),
-                Chapter(
+                ChapterButton(
                   headline: "Hoofdstuk 2",
                   description: "Introductie",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/hoofdstuk2_navigatie');
+                    Navigator.pushNamed(context, '/hoofdstuk-2');
                   },
                 ),
-                Chapter(
+                ChapterButton(
                   headline: "Hoofdstuk 3",
                   description: "Introductie",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/hoofdstuk3_navigatie');
+                    Navigator.pushNamed(context, '/hoofdstuk-3');
                   },
                 ),
               ],

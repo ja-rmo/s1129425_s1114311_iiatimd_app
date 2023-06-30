@@ -86,10 +86,13 @@ class _AlfabetAEPageState extends State<AlfabetAEPage> {
       floatingActionButton: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(16.0),
-        child: ElevatedButton.icon(
-          onPressed: () {},
-          icon: const Icon(Icons.camera),
-          label: const Text('Maak video'),
+        child: ElevatedButton(
+          onPressed: () => Navigator.pushNamed(context, '/camera'),
+          child: Row(children: const [
+            Icon(Icons.camera),
+            SizedBox(width: 16),
+            Text('Maak video'),
+          ]),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

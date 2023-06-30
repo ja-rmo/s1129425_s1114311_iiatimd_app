@@ -5,7 +5,9 @@ class MijnVideoPage extends StatefulWidget {
   const MijnVideoPage({Key? key}) : super(key: key);
 
   @override
-  _MijnVideoPageState createState() => _MijnVideoPageState();
+  State<MijnVideoPage> createState() {
+    return _MijnVideoPageState();
+  }
 }
 
 class _MijnVideoPageState extends State<MijnVideoPage> {

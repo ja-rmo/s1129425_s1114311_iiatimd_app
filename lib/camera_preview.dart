@@ -76,34 +76,36 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black,
-              border: Border.all(
-                color: camController != null &&
-                        camController!.value.isRecordingVideo
-                    ? Colors.redAccent
-                    : Colors.grey,
-                width: 3.0,
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black,
+                border: Border.all(
+                  color: camController != null &&
+                          camController!.value.isRecordingVideo
+                      ? Colors.redAccent
+                      : Colors.grey,
+                  width: 3.0,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(1.0),
-              child: Center(
-                child: _cameraPreviewWidget(),
+              child: Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: Center(
+                  child: _cameraPreviewWidget(),
+                ),
               ),
             ),
           ),
-        ),
-        _captureControlRowWidget(),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: _cameraTogglesRowWidget(),
-        ),
-      ],
+          _captureControlRowWidget(),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: _cameraTogglesRowWidget(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -123,32 +125,33 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.videocam),
-          color: Colors.blue,
+        FloatingActionButton(
+          heroTag: 'start_stop_video',
           onPressed: cameraController != null &&
                   cameraController.value.isInitialized &&
                   !cameraController.value.isRecordingVideo
               ? onVideoRecordButtonPressed
-              : null,
-        ),
-        IconButton(
-          icon: const Icon(Icons.stop),
-          color: Colors.red,
-          onPressed: cameraController != null &&
+              : onStopButtonPressed,
+          backgroundColor: cameraController != null &&
                   cameraController.value.isInitialized &&
                   cameraController.value.isRecordingVideo
-              ? onStopButtonPressed
-              : null,
+              ? Colors.red
+              : Colors.blue,
+          child: Icon(
+            cameraController != null && cameraController.value.isRecordingVideo
+                ? Icons.stop
+                : Icons.videocam,
+          ),
         ),
-        IconButton(
-          icon: const Icon(Icons.pause_presentation),
-          color:
+        FloatingActionButton(
+          heroTag: 'pause_resume_preview',
+          onPressed:
+              cameraController == null ? null : onPausePreviewButtonPressed,
+          backgroundColor:
               cameraController != null && cameraController.value.isPreviewPaused
                   ? Colors.red
                   : Colors.blue,
-          onPressed:
-              cameraController == null ? null : onPausePreviewButtonPressed,
+          child: const Icon(Icons.pause_presentation),
         ),
       ],
     );
@@ -176,6 +179,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
           SizedBox(
             width: 90.0,
             child: RadioListTile<CameraDescription>(
+              
               title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
               groupValue: camController?.description,
               value: cameraDescription,

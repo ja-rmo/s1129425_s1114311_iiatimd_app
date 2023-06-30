@@ -7,8 +7,7 @@ class VideoPlayerWidget extends StatefulWidget {
   const VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
+  State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
@@ -56,6 +55,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        
         onPressed: () {
           setState(() {
             _controller.value.isPlaying
@@ -67,6 +67,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
     );
   }
 }
