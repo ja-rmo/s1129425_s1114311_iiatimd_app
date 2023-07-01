@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dovenlingo/videopages/video_player_widget.dart';
+import 'package:flutter_dovenlingo/widgets/video_player_widget.dart';
 
 class AlphabetPage extends StatelessWidget {
   final List<String> letters;
