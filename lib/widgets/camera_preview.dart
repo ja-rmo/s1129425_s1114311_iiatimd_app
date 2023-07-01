@@ -4,6 +4,9 @@ import 'package:video_player/video_player.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/scheduler.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'comparison.dart';
 
 List<CameraDescription> cameras = <CameraDescription>[];
 
@@ -179,7 +182,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
           SizedBox(
             width: 90.0,
             child: RadioListTile<CameraDescription>(
-              
               title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
               groupValue: camController?.description,
               value: cameraDescription,
@@ -260,15 +262,38 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     });
   }
 
-  void onStopButtonPressed() {
-    stopVideoRecording().then((XFile? file) {
+  void onStopButtonPressed() async {
+    stopVideoRecording().then((XFile? file) async {
       if (mounted) {
         setState(() {});
       }
       if (file != null) {
-        showInSnackBar('Video recorded to ${file.path}');
-        videoFile = file;
-        _startVideoPlayer();
+        final Directory appDocumentsDirectory =
+            await getApplicationDocumentsDirectory();
+        final String videoDirectoryPath =
+            '${appDocumentsDirectory.path}/videos';
+        final Directory videoDirectory = Directory(videoDirectoryPath);
+        await videoDirectory.create(recursive: true);
+
+        final String videoPath = '$videoDirectoryPath/myvideo.mp4';
+        final File newVideoFile = File(videoPath);
+
+        file.saveTo(newVideoFile.path).then((_) {
+          showInSnackBar('Video recorded to ${newVideoFile.path}');
+          videoFile = XFile(newVideoFile.path);
+          // _startVideoPlayer();
+
+          // Navigeer naar de ComparisonPage en geef de videoFilePath door
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ComparisonPage(videoFilePath: newVideoFile.path),
+            ),
+          );
+        }).catchError((e) {
+          showInSnackBar('Error saving video: $e');
+        });
       }
     });
   }
