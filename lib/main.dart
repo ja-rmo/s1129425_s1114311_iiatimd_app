@@ -4,6 +4,8 @@ import 'widgets/chapter_button.dart';
 import 'chapterOne/alphabet_ae.dart';
 import 'chapter_navigation.dart';
 import 'camera_preview.dart';
+import 'alfabet_A-E_video_page.dart';
+import 'full_video_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +27,7 @@ class MainApp extends StatelessWidget {
         // '/hoofdstuk-2': (context) => const ChapterNavigation().chapter2(context),
         // '/hoofdstuk-3': (context) => const ChapterNavigation().chapter3(context),
         '/alfabetAE': (context) => const AlphabetAE(),
-
-        // '/naam': (context) => const,
+        '/naam': (context) => const FullVideoPage(),
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,
@@ -40,7 +41,7 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final PageController pageController = PageController(viewportFraction: 0.8);
 
