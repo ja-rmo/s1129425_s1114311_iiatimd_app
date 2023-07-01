@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dovenlingo/videopages/video_player_widget.dart';
 
-class AlphabetAE extends StatelessWidget {
-  const AlphabetAE({Key? key}) : super(key: key);
+class AlphabetPage extends StatelessWidget {
+  final List<String> letters;
+
+  const AlphabetPage({Key? key, required this.letters}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +14,19 @@ class AlphabetAE extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Hier leer je het alfabet! we beginnen met A tot en met E!"',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              'Hier leer je het alfabet! We beginnen met ${letters.first} tot en met ${letters.last}!"',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(
             child: Center(
-              child: VideoPlayerWidget(videoUrl: 'assets/videos/Alfabet_A-E.mp4'),
+              child: VideoPlayerWidget(
+                  videoUrl:
+                      'assets/videos/Alfabet_${letters.first}-${letters.last}.mp4'),
             ),
           ),
         ],
@@ -40,6 +44,7 @@ class AlphabetAE extends StatelessWidget {
     );
   }
 }
+
 
 // Widget alphabetAEPage(BuildContext context) {
 //   return Scaffold(
