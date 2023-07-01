@@ -9,7 +9,7 @@ class ChapterNavigation extends StatelessWidget {
     return Scaffold(
       body: PageView(
         children: [
-          chapterOne(context),
+          chapter1(context),
           chapter2(context),
           chapter3(context),
         ],
@@ -17,7 +17,7 @@ class ChapterNavigation extends StatelessWidget {
     );
   }
 
-  Widget chapterOne(
+  Widget chapter1(
     BuildContext context,
   ) {
     return Scaffold(
@@ -28,11 +28,11 @@ class ChapterNavigation extends StatelessWidget {
         child: GridView.count(
           crossAxisCount: 2,
           children: const [
-            subjectButton(text: 'Alfabet', onPressed: '/alfabetAE'),
-            subjectButton(text: 'Alfabet', onPressed: '/alfabetFJ'),
-            subjectButton(text: 'Alfabet', onPressed: '/alfabetKO'),
-            subjectButton(text: 'Alfabet', onPressed: '/alfabetPT'),
-            subjectButton(text: 'Alfabet', onPressed: '/alfabetUZ'),
+            subjectButton(text: 'Alfabet A tot E', onPressed: '/alfabetAE'),
+            subjectButton(text: 'Alfabet F tot J', onPressed: '/alfabetFJ'),
+            subjectButton(text: 'Alfabet K tot O', onPressed: '/alfabetKO'),
+            subjectButton(text: 'Alfabet P tot T', onPressed: '/alfabetPT'),
+            subjectButton(text: 'Alfabet U tot Z', onPressed: '/alfabetUZ'),
           ],
         ),
       ),

@@ -22,9 +22,12 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/hoofdstuk-1': (context) => const ChapterNavigation(),
-        // '/hoofdstuk-2': (context) => const ChapterNavigation().chapter2(context),
-        // '/hoofdstuk-3': (context) => const ChapterNavigation().chapter3(context),
+        '/hoofdstuk-1': (context) =>
+            const ChapterNavigation().chapter1(context),
+        '/hoofdstuk-2': (context) =>
+            const ChapterNavigation().chapter2(context),
+        // '/hoofdstuk-3': (context) =>
+        //     const ChapterNavigation().chapter3(context),
         '/alfabetAE': (context) => const AlphabetAE(),
         '/naam': (context) => const FullVideoPage(),
         // '/leeftijd': (context) => const ,
@@ -67,7 +70,7 @@ class HomePage extends StatelessWidget {
               children: [
                 ChapterButton(
                   headline: "Hoofdstuk 1",
-                  description: "Introductie",
+                  description: "Alfabet: A tot Z!",
                   onPressed: () {
                     Navigator.pushNamed(context, '/hoofdstuk-1');
                   },
@@ -81,7 +84,7 @@ class HomePage extends StatelessWidget {
                 ),
                 ChapterButton(
                   headline: "Hoofdstuk 3",
-                  description: "Introductie",
+                  description: "Coming Soon",
                   onPressed: () {
                     Navigator.pushNamed(context, '/hoofdstuk-3');
                   },
