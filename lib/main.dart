@@ -3,6 +3,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'chapter.dart';
 import 'chapter_navigation.dart';
 import 'alfabet_A-E_video_page.dart';
+import 'full_video_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -23,7 +24,7 @@ class MainApp extends StatelessWidget {
         // '/hoofdstuk2_navigatie': (context) => const ChapterNavigation(),
         // '/hoofdstuk3_navigatie': (context) => const ChapterNavigation(),
         '/alfabet': (context) => const AlfabetAEPage(),
-        // '/naam': (context) => const ,
+        '/naam': (context) => const FullVideoPage(),
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,

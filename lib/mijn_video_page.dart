@@ -5,6 +5,7 @@ class MijnVideoPage extends StatefulWidget {
   const MijnVideoPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MijnVideoPageState createState() => _MijnVideoPageState();
 }
 
@@ -16,7 +17,7 @@ class _MijnVideoPageState extends State<MijnVideoPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/videos/test.mp4')
+    _controller = VideoPlayerController.asset('assets/videos/Mijn.mp4')
       ..initialize().then((_) {
         setState(() {
           _isVideoInitialized = true;
