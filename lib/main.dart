@@ -4,8 +4,7 @@ import 'widgets/chapter_button.dart';
 import 'chapterOne/alphabet_ae.dart';
 import 'chapter_navigation.dart';
 import 'camera_preview.dart';
-import 'alfabet_A-E_video_page.dart';
-import 'full_video_page.dart';
+import 'videopages/full_video_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
