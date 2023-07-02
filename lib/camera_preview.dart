@@ -3,7 +3,6 @@ import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/scheduler.dart';
 
 List<CameraDescription> cameras = <CameraDescription>[];
 
@@ -14,21 +13,6 @@ class CameraPreviewWidget extends StatefulWidget {
   State<CameraPreviewWidget> createState() {
     return _CameraPreviewWidgetState();
   }
-}
-
-IconData getCameraLensIcon(CameraLensDirection direction) {
-  switch (direction) {
-    case CameraLensDirection.back:
-      return Icons.camera_rear;
-    case CameraLensDirection.front:
-      return Icons.camera_front;
-    case CameraLensDirection.external:
-      return Icons.camera;
-  }
-  // This enum is from a different package, so a new value could be added at
-  // any time. The example should keep working if that happens.
-  // ignore: dead_code
-  return Icons.camera;
 }
 
 void _logError(String code, String? message) {
@@ -99,10 +83,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
           ),
         ),
         _captureControlRowWidget(),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: _cameraTogglesRowWidget(),
-        ),
       ],
     );
   }
@@ -154,41 +134,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     );
   }
 
-  Widget _cameraTogglesRowWidget() {
-    final List<Widget> toggles = <Widget>[];
-
-    void onChanged(CameraDescription? description) {
-      if (description == null) {
-        return;
-      }
-
-      onNewCameraSelected(description);
-    }
-
-    if (cameras.isEmpty) {
-      SchedulerBinding.instance.addPostFrameCallback((_) async {
-        showInSnackBar('No camera found.');
-      });
-      return const Text('None');
-    } else {
-      for (final CameraDescription cameraDescription in cameras) {
-        toggles.add(
-          SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: camController?.description,
-              value: cameraDescription,
-              onChanged: onChanged,
-            ),
-          ),
-        );
-      }
-    }
-
-    return Row(children: toggles);
-  }
-
   void showInSnackBar(String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
@@ -205,7 +150,9 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   Future<void> _initializeCamera() async {
     await _getAvailableCameras();
     if (cameras.isNotEmpty) {
-      await _initializeCameraController(cameras[0]);
+      await _initializeCameraController(cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front,
+          orElse: () => cameras.first));
     }
   }
 
