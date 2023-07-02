@@ -3,7 +3,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'widgets/chapter_button.dart';
 import 'camera_preview.dart';
-import 'videopages/full_video_page.dart';
 import 'chapter_navigation.dart';
 import 'chapterOne/alphabet.dart';
 
@@ -42,7 +41,7 @@ class MainApp extends StatelessWidget {
         '/alfabetUZ': (context) =>
             const AlphabetPage(letters: ['U', 'V', 'W', 'X', 'Y', 'Z']),
 
-        '/naam': (context) => const FullVideoPage(),
+        // '/naam': (context) => const FullVideoPage(),
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,
