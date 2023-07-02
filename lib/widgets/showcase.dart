@@ -24,27 +24,39 @@ class _ShowcasePageState extends State<ShowcasePage> {
       appBar: AppBar(
         title: const Text('Introduceren'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              widget.introductionText,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                widget.introductionText,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Center(
-              child: VideoPlayerWidget(
-                videoUrl: widget.videoUrl,
+            Expanded(
+              child: Center(
+                child: VideoPlayerWidget(
+                  videoUrl: widget.videoUrl,
+                ),
               ),
             ),
-          ),
-        ],
+            Flexible(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: const Text(
+                  'Houd er rekening mee dat het gespiegeld is. Als het in de video naar rechts gaat, doe jij het naar links!',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: Container(
         width: double.infinity,

@@ -1,73 +1,100 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
+  final bool isAsset;
 
-  const VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
+  const VideoPlayerWidget({
+    Key? key,
+    required this.videoUrl,
+    this.isAsset = true,
+  }) : super(key: key);
 
   @override
-  State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
+  _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
-  late String _videoUrl;
-  
+  late Future<void> _initializeVideoPlayerFuture;
+  bool _isVideoEnd = false;
+
   @override
   void initState() {
     super.initState();
-    _videoUrl = widget.videoUrl;
-    _controller = VideoPlayerController.asset(_videoUrl);
-    _initializeVideoPlayer();
+    _controller = widget.isAsset
+        ? VideoPlayerController.asset(widget.videoUrl)
+        : VideoPlayerController.file(File(widget.videoUrl));
+    _initializeVideoPlayerFuture = _initializeVideoPlayer();
   }
 
   Future<void> _initializeVideoPlayer() async {
-    try {
-      await _controller.initialize();
-      setState(() {});
-    } catch (error) {
-      // Handle error
-      print('Error initializing video player: $error');
+    await _controller.initialize();
+    _controller.addListener(_videoPlayerListener);
+    setState(() {});
+  }
+
+  void _videoPlayerListener() {
+    if (_controller.value.position >= _controller.value.duration) {
+      setState(() {
+        _isVideoEnd = true;
+      });
+    } else {
+      setState(() {
+        _isVideoEnd = false;
+      });
     }
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _controller.removeListener(_videoPlayerListener);
     _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: _controller.initialize(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        
-        onPressed: () {
-          setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+    return FutureBuilder(
+      future: _initializeVideoPlayerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    if (_isVideoEnd) {
+                      _controller.seekTo(Duration.zero);
+                      _isVideoEnd = false;
+                    }
+                    if (_controller.value.isPlaying) {
+                      _controller.pause();
+                    } else {
+                      _controller.play();
+                    }
+                  });
+                },
+                child: Icon(
+                  _isVideoEnd || !_controller.value.isPlaying
+                      ? Icons.play_arrow
+                      : Icons.pause,
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

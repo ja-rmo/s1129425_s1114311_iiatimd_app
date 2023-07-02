@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'widgets/chapter_button.dart';
-import 'widgets/camera_preview.dart';
-import 'widgets/showcase.dart';
-import 'widgets/comparison.dart';
+import 'widgets/pre_showcase.dart';
 
 import 'chapter_navigation.dart';
 
 import 'chapterOne/alphabet.dart';
-
-import 'chapterTwo/Naam/naam_route.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,22 +32,46 @@ class MainApp extends StatelessWidget {
         //     const ChapterNavigation().chapter3(context),
 
         //De middelste letters zoals B-C-D zijn eigenlijk niet nodig, maar voor het overzicht
-        '/alfabetAE': (context) =>
-            const AlphabetPage(letters: ['A', 'B', 'C', 'D', 'E']),
-        '/alfabetFJ': (context) =>
-            const AlphabetPage(letters: ['F', 'G', 'H', 'I', 'J']),
-        '/alfabetKO': (context) =>
-            const AlphabetPage(letters: ['K', 'L', 'M', 'N', 'O']),
-        '/alfabetPT': (context) =>
-            const AlphabetPage(letters: ['P', 'Q', 'R', 'S', 'T']),
-        '/alfabetUZ': (context) =>
-            const AlphabetPage(letters: ['U', 'V', 'W', 'X', 'Y', 'Z']),
 
-        '/naam': (context) => const NaamPage(),
-        '/showcase_naam': (context) => const ShowcasePage(
+        '/alfabetAE': (context) => const PreShowcasePage(
               introductionText:
-                  'We gaan eerst apart alle woorden leren. Zo doe je het woord "mijn"',
-              videoUrl: 'assets/videos/Mijn.mp4',
+                  'Hier leer je het alfabet! We beginnen met A tot en met E!',
+              videoUrl: 'assets/videos/Alfabet_A-E.mp4',
+            ),
+        '/alfabetFJ': (context) => const PreShowcasePage(
+              introductionText:
+                  'Hier leer je het alfabet! We beginnen met F tot en met J!',
+              videoUrl: 'assets/videos/Alfabet_F-J.mp4',
+            ),
+        '/alfabetKO': (context) => const PreShowcasePage(
+              introductionText:
+                  'Hier leer je het alfabet! We beginnen met K tot en met O!',
+              videoUrl: 'assets/videos/Alfabet_K-O.mp4',
+            ),
+        '/alfabetPT': (context) => const PreShowcasePage(
+              introductionText:
+                  'Hier leer je het alfabet! We beginnen met P tot en met T!',
+              videoUrl: 'assets/videos/Alfabet_P-T.mp4',
+            ),
+        '/alfabetUZ': (context) => const PreShowcasePage(
+              introductionText:
+                  'Hier leer je het alfabet! We beginnen met U tot en met Z!',
+              videoUrl: 'assets/videos/Alfabet_U-Z.mp4',
+            ),
+        '/naam': (context) => const PreShowcasePage(
+              introductionText:
+                  'In deze cursus leren we je de zin "Mijn naam is {}"! Dit is hoe het er in zijn geheel uit ziet',
+              videoUrl: 'assets/videos/Mijn_naam_is_Suzette.mp4',
+            ),
+        '/hoeGaatHet': (context) => const PreShowcasePage(
+              introductionText:
+                  'In deze cursus leren we je de zin "Hoe gaat het"! Dit is hoe het er in zijn geheel uit ziet',
+              videoUrl: 'assets/videos/Hoe_gaat_het.mp4',
+            ),
+        '/hoeIsHet': (context) => const PreShowcasePage(
+              introductionText:
+                  'In deze cursus leren we je de zin "Hoe is het"! Dit is hoe het er in zijn geheel uit ziet',
+              videoUrl: 'assets/videos/Hoe_is_het.mp4',
             ),
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,

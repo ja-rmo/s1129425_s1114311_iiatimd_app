@@ -45,6 +45,7 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    camController?.dispose(); // Sluit de cameracontroller correct af
     super.dispose();
   }
 

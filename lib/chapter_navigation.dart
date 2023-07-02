@@ -51,9 +51,9 @@ class ChapterNavigation extends StatelessWidget {
           crossAxisCount: 2,
           children: const [
             subjectButton(text: 'Naam', onPressed: '/naam'),
-            subjectButton(text: 'Leeftijd', onPressed: '/leeftijd'),
-            subjectButton(text: 'Wonen', onPressed: '/wonen'),
-            subjectButton(text: 'School', onPressed: '/school'),
+            subjectButton(text: 'SmallTalk1', onPressed: '/hoeGaatHet'),
+            subjectButton(text: 'SmallTalk2', onPressed: '/hoeIsHet'),
+            subjectButton(text: 'Coming Soon', onPressed: '/school'),
           ],
         ),
       ),
