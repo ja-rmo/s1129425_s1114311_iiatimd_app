@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'widgets/chapter_button.dart';
 import 'chapterOne/alphabet_ae.dart';
+import 'chapterOne/alphabet_fj.dart';
+import 'chapterOne/alphabet_ko.dart';
+import 'chapterOne/alphabet_pt.dart';
+import 'chapterOne/alphabet_uz.dart';
+
 import 'chapter_navigation.dart';
 import 'camera_preview.dart';
 
@@ -25,6 +30,10 @@ class MainApp extends StatelessWidget {
         // '/hoofdstuk-2': (context) => const ChapterNavigation().chapter2(context),
         // '/hoofdstuk-3': (context) => const ChapterNavigation().chapter3(context),
         '/alfabetAE': (context) => const AlphabetAE(),
+        '/alfabetFJ': (context) => const AlphabetFJ(),
+        '/alfabetKO': (context) => const AlphabetKO(),
+        '/alfabetPT': (context) => const AlphabetPT(),
+        '/alfabetUZ': (context) => const AlphabetUZ(),
 
         // '/naam': (context) => const,
         // '/leeftijd': (context) => const ,

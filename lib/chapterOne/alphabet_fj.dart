@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dovenlingo/videopages/video_player_widget.dart';
 
-class AlphabetAE extends StatelessWidget {
-  const AlphabetAE({Key? key}) : super(key: key);
+class AlphabetFJ extends StatelessWidget {
+  const AlphabetFJ({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,13 @@ class AlphabetAE extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Hier leer je het alfabet! we beginnen met A tot en met E!"',
+              'Hier leer je het alfabet! we gaan verder met F tot en met J!"',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(
             child: Center(
-              child: VideoPlayerWidget(videoUrl: 'assets/videos/Alfabet_A-E.mp4'),
+              child: VideoPlayerWidget(videoUrl: 'assets/videos/Alfabet_F-J.mp4'),
             ),
           ),
         ],
