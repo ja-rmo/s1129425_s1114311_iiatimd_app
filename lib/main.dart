@@ -61,6 +61,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final PageController pageController = PageController(initialPage: 0);
+    final double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Dovenlingo')),
       body: ListView(
