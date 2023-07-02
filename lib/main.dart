@@ -56,7 +56,6 @@ class MainApp extends StatelessWidget {
         // '/leeftijd': (context) => const ,
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,
-        '/camera': (context) => const CameraPreviewWidget(),
       },
     );
   }

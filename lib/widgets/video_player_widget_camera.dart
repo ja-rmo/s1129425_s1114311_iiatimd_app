@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidgetCamera extends StatefulWidget {
-  final String videoPath;
+  final String videoUrl;
 
-  const VideoPlayerWidgetCamera({Key? key, required this.videoPath})
+  const VideoPlayerWidgetCamera({Key? key, required this.videoUrl})
       : super(key: key);
 
   @override
@@ -16,13 +16,13 @@ class VideoPlayerWidgetCamera extends StatefulWidget {
 
 class _VideoPlayerWidgetCameraState extends State<VideoPlayerWidgetCamera> {
   late VideoPlayerController _controller;
-  late String _videoPath;
+  late String _videoUrl;
 
   @override
   void initState() {
     super.initState();
-    _videoPath = widget.videoPath;
-    _controller = VideoPlayerController.file(File(_videoPath));
+    _videoUrl = widget.videoUrl;
+    _controller = VideoPlayerController.file(File(_videoUrl));
     _initializeVideoPlayer();
   }
 

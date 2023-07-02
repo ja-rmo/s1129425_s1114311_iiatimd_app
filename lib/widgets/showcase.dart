@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/video_player_widget.dart';
+import 'camera_preview.dart';
 
 class ShowcasePage extends StatefulWidget {
   final String introductionText;
@@ -49,7 +50,14 @@ class _ShowcasePageState extends State<ShowcasePage> {
         width: double.infinity,
         margin: const EdgeInsets.all(16.0),
         child: ElevatedButton.icon(
-          onPressed: () => Navigator.pushNamed(context, '/camera'),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CameraPreviewWidget(
+                originalVideo: widget.videoUrl,
+              ),
+            ),
+          ),
           icon: const Icon(Icons.camera),
           label: const Text('Maak video'),
         ),

@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
-import 'dart:io';
-import 'package:flutter/scheduler.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'comparison.dart';
 
 List<CameraDescription> cameras = <CameraDescription>[];
 
 class CameraPreviewWidget extends StatefulWidget {
-  const CameraPreviewWidget({Key? key}) : super(key: key);
+  final String originalVideo;
+
+  const CameraPreviewWidget({
+    Key? key,
+    required this.originalVideo,
+  }) : super(key: key);
 
   @override
   State<CameraPreviewWidget> createState() {
@@ -217,7 +219,10 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ComparisonPage(videoFilePath: file.path),
+            builder: (context) => ComparisonPage(
+              videoFilePath: file.path,
+              originalVideo: widget.originalVideo,
+            ),
           ),
         );
       }

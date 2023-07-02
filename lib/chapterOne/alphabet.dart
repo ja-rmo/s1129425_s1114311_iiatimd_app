@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dovenlingo/widgets/video_player_widget.dart';
 
+import '../widgets/camera_preview.dart';
+
 class AlphabetPage extends StatelessWidget {
   final List<String> letters;
 
@@ -35,7 +37,15 @@ class AlphabetPage extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.all(16.0),
         child: ElevatedButton.icon(
-          onPressed: () => Navigator.pushNamed(context, '/camera'),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CameraPreviewWidget(
+                originalVideo:
+                    'assets/videos/Alfabet_${letters.first}-${letters.last}.mp4',
+              ),
+            ),
+          ),
           icon: const Icon(Icons.camera),
           label: const Text('Maak video'),
         ),
