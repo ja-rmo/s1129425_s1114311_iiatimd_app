@@ -19,21 +19,6 @@ class CameraPreviewWidget extends StatefulWidget {
   }
 }
 
-IconData getCameraLensIcon(CameraLensDirection direction) {
-  switch (direction) {
-    case CameraLensDirection.back:
-      return Icons.camera_rear;
-    case CameraLensDirection.front:
-      return Icons.camera_front;
-    case CameraLensDirection.external:
-      return Icons.camera;
-  }
-  // This enum is from a different package, so a new value could be added at
-  // any time. The example should keep working if that happens.
-  // ignore: dead_code
-  return Icons.camera;
-}
-
 void _logError(String code, String? message) {
   // ignore: avoid_print
   print('Error: $code${message == null ? '' : '\nError Message: $message'}');
@@ -79,36 +64,30 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: camController != null &&
-                          camController!.value.isRecordingVideo
-                      ? Colors.redAccent
-                      : Colors.grey,
-                  width: 3.0,
-                ),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(
+                color: camController != null &&
+                        camController!.value.isRecordingVideo
+                    ? Colors.redAccent
+                    : Colors.grey,
+                width: 3.0,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(
-                  child: _cameraPreviewWidget(),
-                ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: Center(
+                child: _cameraPreviewWidget(),
               ),
             ),
           ),
-          _captureControlRowWidget(),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: _cameraTogglesRowWidget(),
-          ),
-        ],
-      ),
+        ),
+        _captureControlRowWidget(),
+      ],
     );
   }
 
@@ -160,41 +139,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     );
   }
 
-  Widget _cameraTogglesRowWidget() {
-    final List<Widget> toggles = <Widget>[];
-
-    void onChanged(CameraDescription? description) {
-      if (description == null) {
-        return;
-      }
-
-      onNewCameraSelected(description);
-    }
-
-    if (cameras.isEmpty) {
-      SchedulerBinding.instance.addPostFrameCallback((_) async {
-        showInSnackBar('No camera found.');
-      });
-      return const Text('None');
-    } else {
-      for (final CameraDescription cameraDescription in cameras) {
-        toggles.add(
-          SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: camController?.description,
-              value: cameraDescription,
-              onChanged: onChanged,
-            ),
-          ),
-        );
-      }
-    }
-
-    return Row(children: toggles);
-  }
-
   void showInSnackBar(String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
@@ -211,7 +155,9 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   Future<void> _initializeCamera() async {
     await _getAvailableCameras();
     if (cameras.isNotEmpty) {
-      await _initializeCameraController(cameras[0]);
+      await _initializeCameraController(cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front,
+          orElse: () => cameras.first));
     }
   }
 
@@ -268,32 +214,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         setState(() {});
       }
       if (file != null) {
-        final Directory appDocumentsDirectory =
-            await getApplicationDocumentsDirectory();
-        final String videoDirectoryPath =
-            '${appDocumentsDirectory.path}/videos';
-        final Directory videoDirectory = Directory(videoDirectoryPath);
-        await videoDirectory.create(recursive: true);
-
-        final String videoPath = '$videoDirectoryPath/myvideo.mp4';
-        final File newVideoFile = File(videoPath);
-
-        file.saveTo(newVideoFile.path).then((_) {
-          showInSnackBar('Video recorded to ${newVideoFile.path}');
-          videoFile = XFile(newVideoFile.path);
-          // _startVideoPlayer();
-
-          // Navigeer naar de ComparisonPage en geef de videoFilePath door
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  ComparisonPage(videoFilePath: newVideoFile.path),
-            ),
-          );
-        }).catchError((e) {
-          showInSnackBar('Error saving video: $e');
-        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ComparisonPage(videoFilePath: file.path),
+          ),
+        );
       }
     });
   }
@@ -350,36 +276,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
       _showCameraException(e);
       return null;
     }
-  }
-
-  Future<void> _startVideoPlayer() async {
-    if (videoFile == null) {
-      return;
-    }
-
-    final VideoPlayerController vController =
-        VideoPlayerController.file(File(videoFile!.path));
-
-    videoPlayerListener = () {
-      if (videoController != null) {
-        // Refreshing the state to update video player with the correct ratio.
-        if (mounted) {
-          setState(() {});
-        }
-        videoController!.removeListener(videoPlayerListener!);
-      }
-    };
-    vController.addListener(videoPlayerListener!);
-    await vController.setLooping(true);
-    await vController.initialize();
-    await videoController?.dispose();
-    if (mounted) {
-      setState(() {
-        imageFile = null;
-        videoController = vController;
-      });
-    }
-    await vController.play();
   }
 
   void _showCameraException(CameraException e) {
