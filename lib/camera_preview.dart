@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_dovenlingo/compare_video.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 
@@ -209,7 +210,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         setState(() {});
       }
       if (file != null) {
-        Navigator.pushNamed(context, '/videoPlayback', arguments: file.path.substring(1));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VideoPlaybackPage(videoPath: file.path),
+          ),
+        );
       }
     });
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'compare_video.dart';
 import 'widgets/chapter_button.dart';
 import 'camera_preview.dart';
 import 'chapter_navigation.dart';
 import 'chapterOne/alphabet.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 
@@ -46,7 +46,6 @@ class MainApp extends StatelessWidget {
         // '/wonen': (context) => const ,
         // '/school': (context) => const ,
         '/camera': (context) => const CameraPreviewWidget(),
-        '/videoPlayback': (context) => const VideoPlaybackPage(),
       },
     );
   }
@@ -67,18 +66,44 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: [
           Container(
-              height: 300,
-              width: 200,
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
-              child: const VideoPlayerWidget(videoUrl: 'assets/videos/cat-jam.mp4')),
-          Container(
-              height: 300,
-              width: 200,
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
-              child: const VideoPlayerWidget(
-                  videoUrl: 'assets/videos/the-more-you-know.mp4')),
+            height: 40,
+            width: 100,
+            alignment: Alignment.center,
+            child: SmoothPageIndicator(
+              controller: pageController,
+              count: 3,
+            ),
+          ),
+          SizedBox(
+            height: 250,
+            width: width,
+            child: PageView(
+              controller: pageController,
+              children: [
+                ChapterButton(
+                  headline: "Hoofdstuk 1",
+                  description: "Alfabet: A tot Z!",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/hoofdstuk-1');
+                  },
+                ),
+                ChapterButton(
+                  headline: "Hoofdstuk 2",
+                  description: "Introductie",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/hoofdstuk-2');
+                  },
+                ),
+                ChapterButton(
+                  headline: "Hoofdstuk 3",
+                  description: "Coming Soon",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/hoofdstuk-3');
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
