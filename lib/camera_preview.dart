@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_dovenlingo/compare_video.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
-import 'dart:io';
 
 List<CameraDescription> cameras = <CameraDescription>[];
 
@@ -209,9 +209,12 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         setState(() {});
       }
       if (file != null) {
-        showInSnackBar('Video recorded to ${file.path}');
-        videoFile = file;
-        _startVideoPlayer();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VideoPlaybackPage(videoPath: file.path),
+          ),
+        );
       }
     });
   }
@@ -268,36 +271,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
       _showCameraException(e);
       return null;
     }
-  }
-
-  Future<void> _startVideoPlayer() async {
-    if (videoFile == null) {
-      return;
-    }
-
-    final VideoPlayerController vController =
-        VideoPlayerController.file(File(videoFile!.path));
-
-    videoPlayerListener = () {
-      if (videoController != null) {
-        // Refreshing the state to update video player with the correct ratio.
-        if (mounted) {
-          setState(() {});
-        }
-        videoController!.removeListener(videoPlayerListener!);
-      }
-    };
-    vController.addListener(videoPlayerListener!);
-    await vController.setLooping(true);
-    await vController.initialize();
-    await videoController?.dispose();
-    if (mounted) {
-      setState(() {
-        imageFile = null;
-        videoController = vController;
-      });
-    }
-    await vController.play();
   }
 
   void _showCameraException(CameraException e) {
