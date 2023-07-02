@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'video_player_widget.dart';
+import 'videopages/video_player_widget.dart';
 
 class VideoPlaybackPage extends StatelessWidget {
   final String videoPath;
