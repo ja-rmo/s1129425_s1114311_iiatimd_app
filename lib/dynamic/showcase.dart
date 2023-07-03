@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets/video_player_widget.dart';
-import 'camera_preview.dart';
+import 'package:flutter_dovenlingo/widgets/video_player_widget.dart';
+import 'package:flutter_dovenlingo/dynamic/camera_preview.dart';
 
 class ShowcasePage extends StatefulWidget {
   final String introductionText;
