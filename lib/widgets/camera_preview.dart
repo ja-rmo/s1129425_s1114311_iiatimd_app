@@ -68,9 +68,9 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Expanded(
-          child: Container(
+        Container(
             decoration: BoxDecoration(
               color: Colors.black,
               border: Border.all(
@@ -88,8 +88,10 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
               ),
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: _captureControlRowWidget(),
         ),
-        _captureControlRowWidget(),
       ],
     );
   }
@@ -127,16 +129,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
                 ? Icons.stop
                 : Icons.videocam,
           ),
-        ),
-        FloatingActionButton(
-          heroTag: 'pause_resume_preview',
-          onPressed:
-              cameraController == null ? null : onPausePreviewButtonPressed,
-          backgroundColor:
-              cameraController != null && cameraController.value.isPreviewPaused
-                  ? Colors.red
-                  : Colors.blue,
-          child: const Icon(Icons.pause_presentation),
         ),
       ],
     );
@@ -211,8 +203,8 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
     });
   }
 
-  void onStopButtonPressed() async {
-    stopVideoRecording().then((XFile? file) async {
+  void onStopButtonPressed() {
+    stopVideoRecording().then((XFile? file) {
       if (mounted) {
         setState(() {});
       }
@@ -228,25 +220,6 @@ class _CameraPreviewWidgetState extends State<CameraPreviewWidget>
         );
       }
     });
-  }
-
-  Future<void> onPausePreviewButtonPressed() async {
-    final CameraController? cameraController = camController;
-
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
-      return;
-    }
-
-    if (cameraController.value.isPreviewPaused) {
-      await cameraController.resumePreview();
-    } else {
-      await cameraController.pausePreview();
-    }
-
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   Future<void> startVideoRecording() async {

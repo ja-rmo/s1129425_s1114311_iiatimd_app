@@ -13,8 +13,8 @@ class ShowcasePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ShowcasePageState createState() => _ShowcasePageState();
+  
+  State<ShowcasePage> createState() => _ShowcasePageState();
 }
 
 class _ShowcasePageState extends State<ShowcasePage> {
@@ -39,20 +39,16 @@ class _ShowcasePageState extends State<ShowcasePage> {
                 ),
               ),
             ),
-            Expanded(
-              child: Center(
-                child: VideoPlayerWidget(
-                  videoUrl: widget.videoUrl,
-                ),
+            Center(
+              child: VideoPlayerWidget(
+                videoUrl: widget.videoUrl,
               ),
             ),
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: const Text(
-                  'Houd er rekening mee dat het gespiegeld is. Als het in de video naar rechts gaat, doe jij het naar links!',
-                  style: TextStyle(fontSize: 16),
-                ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: const Text(
+                'Houd er rekening mee dat het gespiegeld is. Als het in de video naar rechts gaat, doe jij het naar links!',
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ],

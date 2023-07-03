@@ -14,7 +14,7 @@ class subjectButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(10.0),
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
@@ -37,7 +37,7 @@ class subjectButton extends StatelessWidget {
             ),
           ),
           minimumSize: MaterialStateProperty.all<Size>(
-            const Size(100, 100),
+            const Size(80, 80),
           ),
           alignment: Alignment.center,
           visualDensity: VisualDensity.adaptivePlatformDensity,

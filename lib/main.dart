@@ -3,10 +3,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'widgets/chapter_button.dart';
 import 'widgets/pre_showcase.dart';
-
 import 'chapter_navigation.dart';
-
-import 'chapterOne/alphabet.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,16 +20,12 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/hoofdstuk-1': (context) => //Dit is het hoofdstuk van het Alfabet
-            const ChapterNavigation().chapter1(context),
-        '/hoofdstuk-2':
-            (context) => //Dit is het hoofdstuk waar je je gaat voorstellen
-                const ChapterNavigation().chapter2(context),
-        // '/hoofdstuk-3': (context) => //Dit hoofdstuk is Coming Soon (not)
-        //     const ChapterNavigation().chapter3(context),
+        '/hoofdstuk-1': //Dit is het hoofdstuk van het Alfabet
+            (context) => const ChapterNavigation().chapter1(context),
+        '/hoofdstuk-2': //Dit is het hoofdstuk waar je je gaat voorstellen
+            (context) => const ChapterNavigation().chapter2(context),
 
-        //De middelste letters zoals B-C-D zijn eigenlijk niet nodig, maar voor het overzicht
-
+// deze groep hoort onder hoofdstuk 1, het zijn alle losse lessen van het alfabet
         '/alfabetAE': (context) => const PreShowcasePage(
               introductionText:
                   'Hier leer je het alfabet! We beginnen met A tot en met E!',
@@ -58,9 +51,11 @@ class MainApp extends StatelessWidget {
                   'Hier leer je het alfabet! We beginnen met U tot en met Z!',
               videoUrl: 'assets/videos/Alfabet_U-Z.mp4',
             ),
+
+// deze groep hoort onder hoofdstuk 2, het zijn alle losse lessen van het voorstellen
         '/naam': (context) => const PreShowcasePage(
               introductionText:
-                  'In deze cursus leren we je de zin "Mijn naam is {}"! Dit is hoe het er in zijn geheel uit ziet',
+                  'In deze cursus leren we je de zin "Mijn naam is ..."! Dit is hoe het er in zijn geheel uit ziet. het voorbeeld is Suzette',
               videoUrl: 'assets/videos/Mijn_naam_is_Suzette.mp4',
             ),
         '/hoeGaatHet': (context) => const PreShowcasePage(
@@ -73,9 +68,6 @@ class MainApp extends StatelessWidget {
                   'In deze cursus leren we je de zin "Hoe is het"! Dit is hoe het er in zijn geheel uit ziet',
               videoUrl: 'assets/videos/Hoe_is_het.mp4',
             ),
-        // '/leeftijd': (context) => const ,
-        // '/wonen': (context) => const ,
-        // '/school': (context) => const ,
       },
     );
   }
@@ -89,10 +81,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: 0, viewportFraction: 0.8);
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final PageController pageController = PageController(viewportFraction: 0.8);
 
     return Scaffold(
       appBar: AppBar(
@@ -101,10 +100,15 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Container(
-            height: 40,
+            height: 80,
             width: 100,
             alignment: Alignment.center,
             child: SmoothPageIndicator(
+              effect: const ExpandingDotsEffect(
+                dotHeight: 20,
+                dotWidth: 20,
+                activeDotColor: Colors.green,
+              ),
               controller: pageController,
               count: 3,
             ),

@@ -11,7 +11,6 @@ class ChapterNavigation extends StatelessWidget {
         children: [
           chapter1(context),
           chapter2(context),
-          chapter3(context),
         ],
       ),
     );
@@ -24,7 +23,8 @@ class ChapterNavigation extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Hoofdstuk 1'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
         child: GridView.count(
           crossAxisCount: 2,
           children: const [
@@ -46,36 +46,15 @@ class ChapterNavigation extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Hoofdstuk 2'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
         child: GridView.count(
           crossAxisCount: 2,
           children: const [
-            subjectButton(text: 'Naam', onPressed: '/naam'),
-            subjectButton(text: 'SmallTalk1', onPressed: '/hoeGaatHet'),
-            subjectButton(text: 'SmallTalk2', onPressed: '/hoeIsHet'),
+            subjectButton(text: 'Mijn naam is', onPressed: '/naam'),
+            subjectButton(text: 'Hoe gaat het', onPressed: '/hoeGaatHet'),
+            subjectButton(text: 'Hoe is het', onPressed: '/hoeIsHet'),
             subjectButton(text: 'Coming Soon', onPressed: '/school'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget chapter3(
-    BuildContext context,
-  ) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hoofdstuk 3'),
-      ),
-      body: Center(
-        child: GridView.count(
-          crossAxisCount: 2,
-          children: const [
-            subjectButton(text: 'Alfabet', onPressed: '/alfabet'),
-            subjectButton(text: 'Naam', onPressed: '/naam'),
-            subjectButton(text: 'Leeftijd', onPressed: '/leeftijd'),
-            subjectButton(text: 'Wonen', onPressed: '/wonen'),
-            subjectButton(text: 'School', onPressed: '/school'),
           ],
         ),
       ),
