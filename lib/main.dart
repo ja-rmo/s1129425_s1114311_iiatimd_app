@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'widgets/chapter_button.dart';
-import 'widgets/pre_showcase.dart';
+import 'package:flutter_dovenlingo/dynamic/pre_showcase.dart';
 import 'chapter_navigation.dart';
 
 void main() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'camera_preview.dart';
-import 'score.dart';
-import 'video_player_widget.dart';
+import 'package:flutter_dovenlingo/widgets/score.dart';
+import 'package:flutter_dovenlingo/widgets/video_player_widget.dart';
 
 class ComparisonPage extends StatelessWidget {
   final String videoFilePath;
